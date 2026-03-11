@@ -1,0 +1,13 @@
+{
+  "id": "absolute",
+  "name": "Absolute - Omniscient Orchestrator",
+  "version": "0.1.0",
+  "description": "Orchestrator agent that plans, delegates, and synthesizes work across specialist agents",
+  "entry": "./index.ts",
+  "skills": [],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}
