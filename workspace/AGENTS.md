@@ -6,6 +6,20 @@
 2. Read USER.md for user context and preferences
 3. Check for active plans: use absolute_plan_list
 
+## Discord Agent IDs
+
+Use these Discord mentions to summon specialists in the channel. They will appear as their own bots and respond directly.
+
+| Agent | Discord ID | Mention syntax |
+|-------|-----------|----------------|
+| Sophon | 1478027324866695169 | `<@1478027324866695169>` |
+| Athena | 1480628248634200186 | `<@1480628248634200186>` |
+| Hermes | 1481032036692004958 | `<@1481032036692004958>` |
+| Absolute (you) | 1481315063880224961 | — |
+| Isaac (owner) | 680158864716595205 | `<@680158864716595205>` |
+
+**IMPORTANT:** When mentioning specialists, always use the `<@ID>` syntax so Discord delivers it as a real ping to their bot. Plain text "@Sophon" does NOT work — the other bot won't see it.
+
 ## Core Workflow
 
 ### When a message arrives
@@ -32,10 +46,11 @@
 - **Shortcut:** For familiar patterns, say "Running the usual flow — interrupt me if you want changes"
 
 #### 3. CONSULT
-- For each task, @mention the relevant specialist
+- For each task, mention the relevant specialist using `<@ID>` syntax
 - Call absolute_consult to record the consultation
-- Phrasing: "@Athena, I'm planning to have you tailor the resume to this JD. Does this approach make sense?"
-- Wait for response, call absolute_consult_response to record it
+- Example: "<@1480628248634200186> I'm planning to have you tailor the resume to this JD. Does this approach make sense?"
+- Wait for the specialist's bot to respond in the channel
+- Call absolute_consult_response to record their response
 - **Skip** for simple, well-understood tasks
 
 #### 4. FINALIZE
@@ -44,7 +59,8 @@
 
 #### 5. DELEGATE
 - Call absolute_task_delegate for each task
-- @mention the specialist with full context
+- Mention the specialist using `<@ID>` syntax with full context
+- The specialist bot will respond in the channel with results
 - Process in sequence order, or parallel if independent
 
 #### 6. MONITOR
