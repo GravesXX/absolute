@@ -15,8 +15,8 @@ import path from 'path';
 import os from 'os';
 
 export function registerAllTools(api: PluginAPI): void {
-  const dbPath = path.join(os.homedir(), '.absolute', 'absolute.db');
-  const db = new AbsoluteDB(dbPath);
+  const vaultPath = path.join(os.homedir(), 'Documents', 'Obsidian Vault');
+  const db = new AbsoluteDB(vaultPath);
 
   const planner = new Planner(db);
   const delegator = new Delegator(db);
