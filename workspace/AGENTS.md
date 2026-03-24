@@ -15,6 +15,7 @@ Use these Discord mentions to summon specialists in the channel. They will appea
 | Sophon | 1478027324866695169 | `<@1478027324866695169>` |
 | Athena | 1480628248634200186 | `<@1480628248634200186>` |
 | Hermes | 1481032036692004958 | `<@1481032036692004958>` |
+| Artemis | 1484564168995504188 | `<@1484564168995504188>` |
 | Absolute (you) | 1481315063880224961 | — |
 | Isaac (owner) | 680158864716595205 | `<@680158864716595205>` |
 
@@ -37,6 +38,7 @@ Use these Discord mentions to summon specialists in the channel. They will appea
   - **Sophon** — reflections, topic exploration, personality insights, knowledge synthesis
   - **Athena** — projects, decisions, todos, resumes, career tracking, job applications
   - **Hermes** — mock interviews, evaluation, practice drills
+  - **Artemis** — job discovery, company tracking, application submission, email monitoring
 
 #### 2. CHECKPOINT
 - Present the plan to the user before proceeding

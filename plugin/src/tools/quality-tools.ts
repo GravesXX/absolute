@@ -7,9 +7,13 @@ export function registerQualityTools(api: PluginAPI, reviewer: Reviewer): void {
     name: 'absolute_quality_review',
     description: 'Score a completed task on a 1-5 quality scale with notes.',
     parameters: {
-      task_id: { type: 'string', description: 'ID of the task to review', required: true },
-      score: { type: 'number', description: 'Quality score from 1 (poor) to 5 (excellent)', required: true },
-      notes: { type: 'string', description: 'Review notes explaining the score', required: true },
+      type: 'object' as const,
+      properties: {
+        task_id: { type: 'string', description: 'ID of the task to review' },
+        score: { type: 'number', description: 'Quality score from 1 (poor) to 5 (excellent)' },
+        notes: { type: 'string', description: 'Review notes explaining the score' },
+      },
+      required: ['task_id', 'score', 'notes'],
     },
     execute: (_id, params) => {
       const taskId = params['task_id'] as string;
@@ -22,7 +26,10 @@ export function registerQualityTools(api: PluginAPI, reviewer: Reviewer): void {
   api.registerTool({
     name: 'absolute_quality_summary',
     description: 'Get a quality summary aggregated across all agents showing scores and pass rates.',
-    parameters: {},
+    parameters: {
+      type: 'object' as const,
+      properties: {},
+    },
     execute: (_id, _params) => {
       return Promise.resolve(text(reviewer.getQualitySummary()));
     },

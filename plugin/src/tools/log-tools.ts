@@ -7,10 +7,13 @@ export function registerLogTools(api: PluginAPI, db: AbsoluteDB): void {
     name: 'absolute_log',
     description: 'Retrieve coordination log entries. Supports filtering by plan, task, or action type.',
     parameters: {
-      plan_id: { type: 'string', description: 'Filter log entries by plan ID (optional)', required: false },
-      task_id: { type: 'string', description: 'Filter log entries by task ID (optional)', required: false },
-      action: { type: 'string', description: 'Filter log entries by action type (optional)', required: false },
-      limit: { type: 'number', description: 'Maximum number of entries to return (default: 20)', required: false },
+      type: 'object' as const,
+      properties: {
+        plan_id: { type: 'string', description: 'Filter log entries by plan ID (optional)' },
+        task_id: { type: 'string', description: 'Filter log entries by task ID (optional)' },
+        action: { type: 'string', description: 'Filter log entries by action type (optional)' },
+        limit: { type: 'number', description: 'Maximum number of entries to return (default: 20)' },
+      },
     },
     execute: (_id, params) => {
       const planId = params['plan_id'] as string | undefined;

@@ -12,11 +12,13 @@ export function registerTrackingTools(
     name: 'absolute_metrics',
     description: 'Retrieve agent performance metrics. Optionally filter by a specific agent.',
     parameters: {
-      agent_id: {
-        type: 'string',
-        description: 'Agent to retrieve metrics for (optional, returns all if omitted)',
-        required: false,
-        enum: ['sophon', 'athena', 'hermes'],
+      type: 'object' as const,
+      properties: {
+        agent_id: {
+          type: 'string',
+          description: 'Agent to retrieve metrics for (optional, returns all if omitted)',
+          enum: ['sophon', 'athena', 'hermes'],
+        },
       },
     },
     execute: (_id, params) => {
@@ -29,8 +31,12 @@ export function registerTrackingTools(
     name: 'absolute_preference_set',
     description: 'Set an orchestration preference key/value pair.',
     parameters: {
-      key: { type: 'string', description: 'Preference key', required: true },
-      value: { type: 'string', description: 'Preference value', required: true },
+      type: 'object' as const,
+      properties: {
+        key: { type: 'string', description: 'Preference key' },
+        value: { type: 'string', description: 'Preference value' },
+      },
+      required: ['key', 'value'],
     },
     execute: (_id, params) => {
       const key = params['key'] as string;
@@ -42,7 +48,10 @@ export function registerTrackingTools(
   api.registerTool({
     name: 'absolute_preference_get',
     description: 'Get all orchestration preferences.',
-    parameters: {},
+    parameters: {
+      type: 'object' as const,
+      properties: {},
+    },
     execute: (_id, _params) => {
       return Promise.resolve(text(prefs.getPreferences()));
     },

@@ -8,22 +8,25 @@ export function registerTaskTools(api: PluginAPI, planner: Planner, delegator: D
     name: 'absolute_task_create',
     description: 'Add a task to an existing plan, assigned to a specific agent.',
     parameters: {
-      plan_id: { type: 'string', description: 'ID of the plan to add the task to', required: true },
-      agent_id: {
-        type: 'string',
-        description: 'Agent to assign the task to',
-        required: true,
-        enum: ['sophon', 'athena', 'hermes'],
+      type: 'object' as const,
+      properties: {
+        plan_id: { type: 'string', description: 'ID of the plan to add the task to' },
+        agent_id: {
+          type: 'string',
+          description: 'Agent to assign the task to',
+          enum: ['sophon', 'athena', 'hermes'],
+        },
+        title: { type: 'string', description: 'Short title of the task' },
+        task_description: { type: 'string', description: 'Full description of what the task involves' },
+        sequence: { type: 'number', description: 'Execution order of this task within the plan' },
       },
-      title: { type: 'string', description: 'Short title of the task', required: true },
-      description: { type: 'string', description: 'Full description of what the task involves', required: true },
-      sequence: { type: 'number', description: 'Execution order of this task within the plan', required: true },
+      required: ['plan_id', 'agent_id', 'title', 'task_description', 'sequence'],
     },
     execute: (_id, params) => {
       const planId = params['plan_id'] as string;
       const agentId = params['agent_id'] as string;
       const title = params['title'] as string;
-      const description = params['description'] as string;
+      const description = params['task_description'] as string;
       const sequence = params['sequence'] as number;
       return Promise.resolve(text(planner.addTask(planId, agentId, title, description, sequence)));
     },
@@ -33,18 +36,20 @@ export function registerTaskTools(api: PluginAPI, planner: Planner, delegator: D
     name: 'absolute_task_update',
     description: 'Update the status and/or result summary of a task.',
     parameters: {
-      task_id: { type: 'string', description: 'ID of the task to update', required: true },
-      status: {
-        type: 'string',
-        description: 'New status to set on the task',
-        required: false,
-        enum: ['pending', 'consulting', 'delegated', 'in_progress', 'review', 'completed', 'failed'],
+      type: 'object' as const,
+      properties: {
+        task_id: { type: 'string', description: 'ID of the task to update' },
+        status: {
+          type: 'string',
+          description: 'New status to set on the task',
+          enum: ['pending', 'consulting', 'delegated', 'in_progress', 'review', 'completed', 'failed'],
+        },
+        result_summary: {
+          type: 'string',
+          description: 'Summary of the task result to record',
+        },
       },
-      result_summary: {
-        type: 'string',
-        description: 'Summary of the task result to record',
-        required: false,
-      },
+      required: ['task_id'],
     },
     execute: (_id, params) => {
       const taskId = params['task_id'] as string;
@@ -78,7 +83,10 @@ export function registerTaskTools(api: PluginAPI, planner: Planner, delegator: D
     name: 'absolute_task_list',
     description: 'List tasks. If plan_id is provided, lists tasks for that plan; otherwise lists all active tasks.',
     parameters: {
-      plan_id: { type: 'string', description: 'ID of the plan to list tasks for (optional)', required: false },
+      type: 'object' as const,
+      properties: {
+        plan_id: { type: 'string', description: 'ID of the plan to list tasks for (optional)' },
+      },
     },
     execute: (_id, params) => {
       const planId = params['plan_id'] as string | undefined;
@@ -104,7 +112,11 @@ export function registerTaskTools(api: PluginAPI, planner: Planner, delegator: D
     name: 'absolute_task_delegate',
     description: 'Delegate a task to its assigned agent, marking it as delegated in the system.',
     parameters: {
-      task_id: { type: 'string', description: 'ID of the task to delegate', required: true },
+      type: 'object' as const,
+      properties: {
+        task_id: { type: 'string', description: 'ID of the task to delegate' },
+      },
+      required: ['task_id'],
     },
     execute: (_id, params) => {
       const taskId = params['task_id'] as string;
